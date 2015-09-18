@@ -9088,7 +9088,7 @@ sub _dump_to_pg
 		if ( ($self->{jobs} > 1) || ($self->{oracle_copies} > 1) ) {
 			$pipe->print("$tt_record $table $total_row $start_time\n");
 		} else {
-			$rps = sprintf("%2.1f", $glob_total_record / ($dt+.0001));
+			$rps = sprintf("%2.1f", $glob_total_record / $dt);
 			print STDERR $self->progress_bar($glob_total_record, $total_row, 25, '=', 'rows', "Table $table ($rps recs/sec)");
 		}
 	} elsif ($self->{debug}) {
@@ -10000,7 +10000,7 @@ sub multiprocess_progressbar
 			my $end_time = time();
 			my $dt = $end_time - $global_start_time;
 			$dt ||= 1;
-			my $rps = sprintf("%.1f", $global_count / ($dt+.0001));
+			my $rps = sprintf("%.1f", $global_count / $dt);
 			print STDERR $self->progress_bar($global_count, $total_rows, 25, '=', 'rows', "on total data (avg: $rps recs/sec)");
 			print STDERR "\n";
 		}
@@ -10022,7 +10022,7 @@ sub multiprocess_progressbar
 			my $end_time = time();
 			my $dt = $end_time - $global_start_time;
 			$dt ||= 1;
-			my $rps = sprintf("%.1f", $global_count / ($dt+.0001));
+			my $rps = sprintf("%.1f", $global_count / $dt);
 			print STDERR $self->progress_bar($global_count, $total_rows, 25, '=', 'rows', "on total data (avg: $rps recs/sec)");
 			print STDERR "\n";
 			$table_count = 0;
@@ -10033,7 +10033,7 @@ sub multiprocess_progressbar
 		my $end_time = time();
 		my $dt = $end_time - $start_time;
 		$dt ||= 1;
-		my $rps = sprintf("%.1f", $table_count / ($dt+.0001));
+		my $rps = sprintf("%.1f", $table_count / $dt);
 		print STDERR $self->progress_bar($table_count, $table_numrows, 25, '=', 'rows', "Table $table ($rps recs/sec)");
 	}
 	print STDERR "\n";
@@ -10041,7 +10041,7 @@ sub multiprocess_progressbar
 		my $end_time = time();
 		my $dt = $end_time - $global_start_time;
 		$dt ||= 1;
-		my $rps = sprintf("%.1f", $global_count / ($dt+.0001));
+		my $rps = sprintf("%.1f", $global_count / $dt);
 		print STDERR $self->progress_bar($global_count, $total_rows, 25, '=', 'rows', "on total data (avg: $rps recs/sec)");
 		print STDERR "\n";
 	}
